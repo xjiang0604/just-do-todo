@@ -1,1 +1,17 @@
-{"tasks":[],"lists":[]}
+{
+  "tasks": [
+    {
+      "id": "mp04kr4chv76hqebffq",
+      "title": "拜访小麦",
+      "completed": false,
+      "createdAt": "2026-05-10T18:47:35.244Z",
+      "dueDate": "2026-05-10",
+      "dueTime": "09:47",
+      "priority": "none",
+      "list": "inbox",
+      "isMyDay": true,
+      "isImportant": false
+    }
+  ],
+  "lists": []
+}
