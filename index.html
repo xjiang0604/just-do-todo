@@ -46,7 +46,7 @@ body {
   display: flex; align-items: center; gap: 10px;
 }
 .app-title::before {
-  content: "鉁?; display: inline-flex; align-items: center; justify-content: center;
+  content: "✓"; display: inline-flex; align-items: center; justify-content: center;
   width: 32px; height: 32px; background: var(--primary); color: white;
   border-radius: var(--radius); font-size: 18px;
 }
@@ -215,34 +215,34 @@ body {
     <div class="sidebar-header"><h1 class="app-title">Just Do</h1></div>
     <nav class="sidebar-nav">
       <div class="nav-item active" data-view="myday">
-        <span class="icon">&#9728;&#65039;</span><span>鎴戠殑涓€澶?/span><span class="count" id="myday-count">0</span>
+        <span class="icon">&#9728;&#65039;</span><span>我的一天</span><span class="count" id="myday-count">0</span>
       </div>
       <div class="nav-item" data-view="important">
-        <span class="icon">&#11088;</span><span>閲嶈</span><span class="count" id="important-count">0</span>
+        <span class="icon">&#11088;</span><span>重要</span><span class="count" id="important-count">0</span>
       </div>
       <div class="nav-item" data-view="planned">
-        <span class="icon">&#128197;</span><span>宸茶鍒?/span><span class="count" id="planned-count">0</span>
+        <span class="icon">&#128197;</span><span>已计划</span><span class="count" id="planned-count">0</span>
       </div>
       <div class="nav-item" data-view="all">
-        <span class="icon">&#128203;</span><span>鎵€鏈変换鍔?/span><span class="count" id="all-count">0</span>
+        <span class="icon">&#128203;</span><span>所有任务</span><span class="count" id="all-count">0</span>
       </div>
       <div class="nav-divider"></div>
-      <div class="nav-label">娓呭崟</div>
+      <div class="nav-label">清单</div>
       <div id="custom-lists"></div>
       <div class="nav-item" id="add-list-btn">
-        <span class="icon">&#10133;</span><span>鏂板缓娓呭崟</span>
+        <span class="icon">&#10133;</span><span>新建清单</span>
       </div>
     </nav>
     <div class="sync-status" id="sync-status">
-      <span>&#9679;</span><span id="sync-text">鏈繛鎺?/span>
+      <span>&#9679;</span><span id="sync-text">未连接</span>
     </div>
   </aside>
 
   <main class="main-content">
     <header class="header">
-      <h2 class="header-title" id="view-title">鎴戠殑涓€澶?/h2>
+      <h2 class="header-title" id="view-title">我的一天</h2>
       <div class="header-actions">
-        <button class="header-btn" id="sync-btn">&#128260; 鍚屾</button>
+        <button class="header-btn" id="sync-btn">&#128260; 同步</button>
       </div>
     </header>
     <div class="task-list-container">
@@ -320,13 +320,13 @@ body {
     </p>
     <input type="text" class="login-input" id="github-owner" placeholder="GitHub &#29992;&#25143;&#21517;">
     <input type="text" class="login-input" id="github-repo" placeholder="&#20179;&#24211;&#21517;&#31216;&#65288;&#22914;&#65292;just-do-todo&#65289;">
-    <input type="password" class="login-input" id="github-token" placeholder="GitHub &#20010;&#20154;&#35775;&#38382;&#201鍙?&#29256;&#65288;Personal Access Token&#65289;">
+    <input type="password" class="login-input" id="github-token" placeholder="GitHub &#20010;&#20154;&#35775;&#38382;&#201另;&#29256;&#65288;Personal Access Token&#65289;">
     <p style="font-size:12px;color:var(--text-secondary);margin-bottom:16px;line-height:1.6;">
-      &#128161; &#22914;&#20309;&#33719;&#21462;&#201鍙?&#29256;&#65311;<br>
+      &#128161; &#22914;&#20309;&#33719;&#21462;&#201另;&#29256;&#65311;<br>
       1. &#30331;&#24405; GitHub &rarr; &#21491;&#19978;&#35282;&#22836;&#20687; &rarr; Settings<br>
       2. &#24038;&#20391;&#12304;Developer settings&#12305;&rarr;&#12304;Personal access tokens&#12305;&rarr;&#12304;Tokens (classic)&#12305;<br>
       3. &#28857;&#20987;&#12304;Generate new token&#12305;&rarr; &#21205;&#36873;&#12304;repo&#12305;&#26435;&#38480;<br>
-      4. &#28857;&#20987;&#12304;Generate token&#12305;&rarr; &#22797;&#21046;&#29983;&#25104;&#30340;&#201鍙?&#29256;
+      4. &#28857;&#20987;&#12304;Generate token&#12305;&rarr; &#22797;&#21046;&#29983;&#25104;&#30340;&#201另;&#29256;
     </p>
     <button class="login-btn" id="login-btn">&#36830;&#25509;</button>
   </div>
@@ -364,30 +364,30 @@ async function githubRequest(path, method = 'GET', body = null) {
   const response = await fetch(url, options);
   if (!response.ok) {
     const err = await response.json();
-    throw new Error(`GitHub API 閿欒: ${response.status} ${err.message}`);
+    throw new Error(`GitHub API 错误: ${response.status} ${err.message}`);
   }
   return response.json();
 }
 
 async function loadFromGitHub() {
   try {
-    showSyncStatus('syncing', '鍚屾涓?..');
+    showSyncStatus('syncing', '同步中...');
     const data = await githubRequest(`contents/data/tasks.json`);
     const content = JSON.parse(atob(data.content));
     tasks = content.tasks || [];
     customLists = content.lists || [];
     renderAll();
-    showSyncStatus('synced', '宸插悓姝?);
+    showSyncStatus('synced', '已同步');
   } catch (err) {
-    console.log('鍔犺浇澶辫触锛屼娇鐢ㄦ湰鍦版暟鎹?, err);
+    console.log('加载失败，使用本地数据', err);
     loadFromLocalStorage();
-    showSyncStatus('error', '绂荤嚎妯″紡');
+    showSyncStatus('error', '离线模式');
   }
 }
 
 async function saveToGitHub() {
   try {
-    showSyncStatus('syncing', '淇濆瓨涓?..');
+    showSyncStatus('syncing', '保存中...');
     const content = btoa(unescape(encodeURIComponent(JSON.stringify({ tasks, lists: customLists }, null, 2))));
     let sha = null;
     try {
@@ -402,10 +402,10 @@ async function saveToGitHub() {
     if (sha) body.sha = sha;
     await githubRequest('contents/data/tasks.json', 'PUT', body);
     renderAll();
-    showSyncStatus('synced', '宸插悓姝?);
+    showSyncStatus('synced', '已同步');
   } catch (err) {
-    console.error('淇濆瓨澶辫触:', err);
-    showSyncStatus('error', '鍚屾澶辫触');
+    console.error('保存失败:', err);
+    showSyncStatus('error', '同步失败');
   }
 }
 
@@ -416,7 +416,7 @@ function loadFromLocalStorage() {
     tasks = JSON.parse(storedTasks);
   } else {
     tasks = [{
-      id: generateId(), title: '娆㈣繋浣跨敤 Just Do锛?, completed: false,
+      id: generateId(), title: '欢迎使用 Just Do！', completed: false,
       createdAt: new Date().toISOString(), dueDate: null, dueTime: null,
       priority: 'none', list: 'inbox', isMyDay: true, isImportant: true
     }];
@@ -556,7 +556,7 @@ function handleLogin() {
   const owner = document.getElementById('github-owner').value.trim();
   const repo = document.getElementById('github-repo').value.trim();
   const token = document.getElementById('github-token').value.trim();
-  if (!owner || !repo || !token) { alert('璇峰～鍐欐墍鏈夊瓧娈?); return; }
+  if (!owner || !repo || !token) { alert('请填写所有字段'); return; }
   GITHUB_CONFIG.owner = owner;
   GITHUB_CONFIG.repo = repo;
   GITHUB_CONFIG.token = token;
@@ -584,7 +584,7 @@ function closeTaskModal() {
 
 function handleAddTask() {
   const title = document.getElementById('task-title').value.trim();
-  if (!title) { alert('璇疯緭鍏ヤ换鍔℃爣棰?); return; }
+  if (!title) { alert('请输入任务标题'); return; }
   addTask({
     title,
     dueDate: document.getElementById('task-date').value || null,
@@ -604,12 +604,12 @@ function selectList(listId) {
   const el = document.querySelector(`.list-item[data-list="${listId}"]`);
   if (el) el.classList.add('active');
   const list = customLists.find(l => l.id === listId);
-  document.getElementById('view-title').textContent = list ? list.name : '娓呭崟';
+  document.getElementById('view-title').textContent = list ? list.name : '清单';
   renderTaskList();
 }
 
 function addNewList() {
-  const name = prompt('杈撳叆娓呭崟鍚嶇О锛?);
+  const name = prompt('输入清单名称：');
   if (!name) return;
   const colors = ['#0078D4','#107C10','#D13438','#FFB900','#8764B8','#567C73'];
   const color = colors[Math.floor(Math.random() * colors.length)];
@@ -625,8 +625,8 @@ function formatDate(dateStr) {
   const date = new Date(dateStr);
   const today = new Date();
   const tomorrow = new Date(today); tomorrow.setDate(tomorrow.getDate() + 1);
-  if (date.toDateString() === today.toDateString()) return '浠婂ぉ';
-  if (date.toDateString() === tomorrow.toDateString()) return '鏄庡ぉ';
+  if (date.toDateString() === today.toDateString()) return '今天';
+  if (date.toDateString() === tomorrow.toDateString()) return '明天';
   return `${date.getMonth()+1}/${date.getDate()}`;
 }
 
@@ -639,7 +639,7 @@ function isOverdue(task) {
 
 function getListName(listId) {
   const list = customLists.find(l => l.id === listId);
-  return list ? list.name : '鏀朵欢绠?;
+  return list ? list.name : '收件箱';
 }
 
 function showSyncStatus(status, text) {
