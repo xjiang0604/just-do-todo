@@ -1,0 +1,22 @@
+{
+  "name": "Just Do - 寰呭姙搴旂敤",
+  "short_name": "Just Do",
+  "description": "寰蒋 To Do 椋庢牸鐨勮法璁惧寰呭姙搴旂敤",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#0078D4",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='64' fill='%230078D4'/%3E%3Cpath d='M192 256l96 96 160-160' stroke='white' stroke-width='48' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "utilities"],
+  "lang": "zh-CN",
+  "scope": "./",
+  "prefer_related_applications": false
+}
